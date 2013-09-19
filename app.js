@@ -35,7 +35,7 @@ var USER_ID = 515390438;
 everyauth.facebook
     .appId('394598857274197')
     .appSecret('9f32ed2ce3bc4f1ea8625948b3ecb71f')
-    .scope('email,user_location,user_photos,publish_actions', 'publish_stream')
+    .scope('email,user_location,user_photos,publish_actions', 'publish_stream', 'manage_pages', 'offline_access')
     .handleAuthCallbackError( function (req, res) {
         res.send('Error occured');
     })
