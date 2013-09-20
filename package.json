@@ -10,6 +10,7 @@
     "ejs": "*",
     "everyauth": "*",
     "mongoose": "*",
-    "fbgraph": "~0.2.7"
+    "fbgraph": "~0.2.7",
+    "dirty": "~0.9.7"
   }
 }
