@@ -155,7 +155,7 @@ app.post('/selectAlbum', function(req, res) {
 
 var postPhoto =  function(req, res) {
   var postData = {url : 'http://dev.socialmosa.com:3700/facebookimg'};
-  graph.post(USER_ID + '/photos', postData, function(err, data) {
+  graph.post(db.get('ALBUM_ID') + '/photos', postData, function(err, data) {
     console.log('Posted Photo', err, data)
     res.send(data);
   })
