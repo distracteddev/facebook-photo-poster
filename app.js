@@ -141,10 +141,10 @@ albums.push({name: 'Test3', id: '124'})
 
 app.get('/selectAlbum', function(req, res) {
   graph.setAccessToken(PETCUREAN_PAGE_TOKEN);
-  graph.get(PETCUREAN_PAGE_ID + '/albums', function(res) {
-    console.log('res', res);
+  graph.get(PETCUREAN_PAGE_ID + '/albums', function(err, graphRes) {
+    //console.log('res', graphRes);
+    res.render('selectAlbum', {albums: graphRes.data})
   })
-  res.render('selectAlbum', {albums: albums})
 });
 
 app.post('/selectAlbum', function(req, res) {
