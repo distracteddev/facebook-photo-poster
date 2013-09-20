@@ -1,0 +1,17 @@
+<% include layouts/header %>
+<h2>Select Album</h2>
+<p>
+    Select the Facebook Album that Boxcam will upload pictures to:
+</p>
+<form method="POST">
+	<select name="album">
+	<% albums.forEach(function(album) {
+			console.log('album', album);
+	%>
+		<option value="<%=album.id%>"><%=album.name%></option>
+	<% }); %>
+	</select>
+	<input type="submit"/>
+</form>
+<% include layouts/footer %>
+

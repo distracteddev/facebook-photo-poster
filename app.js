@@ -8,6 +8,8 @@ var appPath = __dirname + '/app'
     , fs = require('fs')
     , mongoose = require('mongoose')
     , graph = require('fbgraph')
+    , dirty = require('dirty')
+    , db    = dirty('data')
     , everyauth = require('everyauth');
 
 // if you like to see what is going on, set this to true
@@ -31,6 +33,10 @@ everyauth.everymodule.findUserById(function(userId,callback) {
 });
 
 var USER_ID = 515390438;
+
+// var PETCUREAN_ADMIN_ID =
+var PETCUREAN_PAGE_ID = 109670772397760
+var PETCUREAN_PAGE_TOKEN = "CAAFm4rS3c1UBAGQZAYvWtdk4AiJTDxaNmzxnZCeOIrX5quRkxeHdtk168NhgVDATwGpCYoTGkl7fkT1kywoSo0PR0rguXyL6VbWdBWZAjbJpoZBFPooRlbXG4lOZCD4nZAUoiZBOIhHvISKygnKqz3VdKoTVnFpEHZAwVZA5WsWcOmcdreoNKBEMTImbmkHmSm9oZD"
 
 everyauth.facebook
     .appId('394598857274197')
@@ -128,6 +134,24 @@ var index = require(appPath + '/controllers/index')
 app.get('/', index.index);
 app.get('/user',user.index);
 
+var albums = [];
+albums.push({name: 'Test1', id: '982'})
+albums.push({name: 'Test2', id: '467'})
+albums.push({name: 'Test3', id: '124'})
+
+app.get('/selectAlbum', function(req, res) {
+  graph.setAccessToken(PETCUREAN_PAGE_TOKEN);
+  graph.get(PETCUREAN_PAGE_ID + '/albums', function(res) {
+    console.log('res', res);
+  })
+  res.render('selectAlbum', {albums: albums})
+});
+
+app.post('/selectAlbum', function(req, res) {
+  console.log(req.body);
+  db.set('ALBUM_ID', req.body.album);
+  res.render('selectedAlbum');
+});
 
 var postPhoto =  function(req, res) {
   var postData = {url : 'http://dev.socialmosa.com:3700/facebookimg'};
