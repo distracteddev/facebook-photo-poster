@@ -153,8 +153,8 @@ app.post('/selectAlbum', function(req, res) {
   res.render('selectedAlbum');
 });
 
-var postPhoto =  function(req, res) {
-  var postData = {url : 'http://dev.socialmosa.com:3700/facebookimg'};
+var postPhoto =  function(req, res, imgUrl) {
+  var postData = {url : 'http://dev.socialmosa.com:3700/' + imgUrl};
   graph.post(db.get('ALBUM_ID') + '/photos', postData, function(err, data) {
     console.log('Posted Photo', err, data)
     res.send(data);
@@ -163,13 +163,12 @@ var postPhoto =  function(req, res) {
 
 
 app.post('/photo', function(req, res) {
-  console.log(req.body.uri);
-  // console.log(req);
+  // console.log(req.body.uri);
   if (req.body.uri) {
     console.log('Parsing Data URI');
-    parseDataURI(req.body.uri);
+    var imgUrl = parseDataURI(req.body.uri);
     console.log('Done Parsing Data URI');
-    postPhoto(req, res);
+    postPhoto(req, res, imgUrl);
   }
 });
 
@@ -185,7 +184,9 @@ function parseDataURI(string) {
   var ext = matches[1];
   var data = matches[2];
   var buffer = new Buffer(data, 'base64');
-  fs.writeFileSync('data.' + ext, buffer);
+  var fileName = 'images/' + Date.now() + '.' + ext;
+  fs.writeFileSync(fileName, buffer);
+  return fileName;
 }
 
 // parseDataURI(sampleData.url);
