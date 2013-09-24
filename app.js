@@ -114,6 +114,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser('super secret'));
   app.use(express.session());
+  app.use('/images', express.static(path.join(__dirname, 'images')));
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(everyauth.middleware(app)); // important to call this AFTER session!
   app.use(app.router);
@@ -155,6 +156,7 @@ app.post('/selectAlbum', function(req, res) {
 
 var postPhoto =  function(req, res, imgUrl) {
   var postData = {url : 'http://dev.socialmosa.com:3700/' + imgUrl};
+  graph.setAccessToken(PETCUREAN_PAGE_TOKEN);
   graph.post(db.get('ALBUM_ID') + '/photos', postData, function(err, data) {
     console.log('Posted Photo', err, data)
     res.send(data);
