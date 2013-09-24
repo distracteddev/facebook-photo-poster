@@ -156,8 +156,13 @@ app.post('/selectAlbum', function(req, res) {
 
 var postPhoto =  function(req, res, imgUrl) {
   var postData = {url : 'http://dev.socialmosa.com:3700/' + imgUrl};
+  var postURL = db.get('ALBUM_ID') + '/photos';
+
+  console.log('postData', postData);
+  console.log('postURL', postURL);
+
   graph.setAccessToken(PETCUREAN_PAGE_TOKEN);
-  graph.post(db.get('ALBUM_ID') + '/photos', postData, function(err, data) {
+  graph.post(postURL, postData, function(err, data) {
     console.log('Posted Photo', err, data)
     res.send(data);
   })
